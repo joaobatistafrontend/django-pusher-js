@@ -23,6 +23,21 @@ class IndexView(TemplateView):
         print(request.GET)
         if 'inicia' in request.GET:
             self.pusher_client.trigger('painel', 'inicia', {'message': 'iniciou'})
+            #antes
+        # if 'inicia' in request.GET:
+        #     print(request.GET)
+        #     pusher_client = Pusher(
+        #     app_id='1483810',
+        #     key='3a498a7100788cc8aacb',
+        #     secret='8ce2fd82c540313b2ed4',
+        #     cluster='sa1',
+        #     ssl=True
+        #     )
+        #     pusher_client.trigger('painel', 'inicia', {'message': 'iniciou'})
+  
+        
+
+        
         
         if 'pausa' in request.GET:
             print('pausou aqui')            
