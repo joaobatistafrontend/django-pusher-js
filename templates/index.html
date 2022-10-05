@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+</head>
+<body>
+    <div>
+        <button class="para-btn" onclick="location.href='{% url  'index'  %}?um=true'">+1</button>
+        <button class="para-btn" onclick="location.href='{% url  'index'  %}?dois'">+2</button>
+        <button class="para-btn" onclick="location.href='{% url  'index'  %}?tres'">+3</button>
+        <button class="para-btn" onclick="location.href='{% url  'index'  %}?quatro'">+4</button>
+        <button class="para-btn" onclick="location.href='{% url  'index'  %}?cinco'">+5</button>
+
+        <h1 id="relogio">03:00</h1>
+        <button class="inicia-btn" onclick="location.href='{% url  'index'  %}?inicia'">iniciar</button>
+        <button class="pausa-btn" onclick="location.href='{% url  'index'  %}?pausa'">pausar</button>
+        <button class="para-btn" onclick="location.href='{% url  'index'  %}?parar'">para</button>
+        <!-- <div id="message-success" style="backgroud-color: green;"></div> -->
+        <button id="pausado" class="paudado-btn" onclick="pausado()" style="display:none ;">Pausado</button>
+
+    </div>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('3a498a7100788cc8aacb', {
+        cluster: 'sa1'
+        });
+        var channel = pusher.subscribe('painel');
+        channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data));
+        });
+
+
+    </script>
+</body>
+</html>

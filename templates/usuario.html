@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+<title>usuario</title>
+</head>
+<body>
+    <h1 id="relogio">03:00</h1>
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('3a498a7100788cc8aacb', {
+    cluster: 'sa1'
+    });
+
+    var channel = pusher.subscribe('painel');
+
+    channel.bind('inicia', function(data) {
+        inicia()
+    });
+
+    channel.bind('pausa', function(data){
+        pausa()
+    });
+
+    channel.bind('parar', function(data){
+        parar()
+    });
+    channel.bind('um', function(data){
+        um()
+    });
+    
+    channel.bind('dois', function(data){
+        dois()
+    }); 
+
+    channel.bind('tres', function(data){
+        tres()
+    });
+
+    channel.bind('quatro', function(data){
+        quatro()
+    });
+    
+    channel.bind('cinco', function(data){
+        cinco()
+    });
+    
+
+
+
+
+    var seg = 60
+    var min = 3
+    var interval
+    var pausado = document.getElementById('pausado')
+    function doisDig(digito){
+        if(digito<10){
+            return('0'+digito)
+        }else{
+            return(digito)
+        }
+    }
+
+
+    function inicia(){
+    interval = setInterval(relogio,1000)
+    if (pausado.style.display ==='block'){
+        pausado.style.display ='none'
+        paudado.style.cor="red"
+
+    }else{
+            pausado.style.display ==='block'
+        }
+    }
+    // function divSucess(message){
+    //     return `<p style="backgroud-color: green">${message}</p>`
+    // }
+
+    function pausa(){
+        clearInterval(interval)
+        if (pausado.style.display ==='none'){
+            pausado.style.display ='block'
+        }else{
+            pausado.style.display ==='none'
+        }
+
+        // if (p)
+        // document.getElementById('message-success').innerHTML = divSucess('Tempo pausado com sucesso.')
+        
+    }
+    function parar(){
+        clearInterval(interval)
+        seg = 00
+        min = 3
+        document.getElementById('relogio').innerHTML = '00:00'
+    }
+
+    function relogio(){
+        seg -= 1
+        if (seg == 59){
+            min = min -1
+            seg = 59
+        }
+        if (seg == -1){
+            seg = 60
+        }
+        if (min == -1){
+            min = 00
+            seg = 00
+        }
+        if (min == 00 && seg == 00){
+            parar()
+        }
+        
+        console.log(min)
+        console.log(seg)
+        cor (document.getElementById('relogio').innerHTML = doisDig(min)+ ':' + doisDig(seg))
+    }
+    // function um(){(min == min)=> min++}
+
+    function um(){
+        if (min == min){
+            min ++
+        } 
+    }
+    function  dois(){
+        if (min == min){
+            min = min +2
+        } 
+    }
+    function  tres(){
+        if (min == min){
+            min = min +3
+        }    
+    }
+    function  quatro(){
+        if (min == min){
+            min = min +4
+        } 
+    }
+    function  cinco(){
+        if (min == min){
+            min = min +5
+        } 
+    }
+
+    function cor(){
+        if(min >=2){
+            document.getElementById('relogio').style.color = "green";
+        }
+        if (min <1){
+            document.getElementById('relogio').style.color = "red";
+        }
+    }
+
+
+
+
+
+
+
+</script>
+</html>
